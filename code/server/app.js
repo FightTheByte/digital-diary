@@ -5,6 +5,7 @@ const passport = require('passport');
 const session = require('express-session');
 const sessionPool = require('pg').Pool;
 const dotenv = require('dotenv');
+dotenv.config();
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use(express.json());
 app.use(cors(options));
 const PORT = 4000;
 
+console.log(process.env.PASSWORD);
+
 const databasePool = new sessionPool({
     user: process.env.USER,
     host: process.env.HOST,
@@ -26,10 +29,18 @@ const databasePool = new sessionPool({
     port: process.env.PORT
 });
 
-app.get('/test', (req, res) => {
-    res.json({
-        test: "hello"
-    });
+app.get('/test', async (req, res) => {
+    try{
+        const client = await databasePool.connect();
+        const result = await client.query('SELECT * FROM test;');
+        res.json({
+            response: result.rows[0].name
+        });
+    } catch(err) {
+        console.log(err);
+    } finally {
+        client.end();
+    }
 });
 
 app.listen(PORT, ()  => {
