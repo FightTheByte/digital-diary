@@ -1,0 +1,14 @@
+@startuml
+
+actor Actor as user
+participant Server as server
+database Database as db
+
+
+
+user -> server: Authentication Request
+server -> db: User Details Query
+db --> server: User Details
+server --> user: Authentication Response
+
+@enduml
