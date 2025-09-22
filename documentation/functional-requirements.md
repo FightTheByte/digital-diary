@@ -18,3 +18,4 @@
     - Intuitive UX
     - Appropriate colour scheme
     - Able to run and load quickly on free hosting services
+    - Responsive Design
