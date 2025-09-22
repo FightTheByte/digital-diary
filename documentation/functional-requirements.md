@@ -12,6 +12,7 @@
     -  Allow user to sign-up
     -  Allow user to log in 
     -  Allow user to delete account
+    -  Show user a chart of their weekly or monthly usage 
   
 ### Non-Functional Requirements 
 
