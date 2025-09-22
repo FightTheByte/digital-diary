@@ -44,6 +44,23 @@ app.get('/test', async (req, res) => {
     }
 });
 
+app.post('/post', async (req, res) => {
+    try {
+        if(req.body['title'] && req.body['post']){
+            //let body = await JSON.parse(req.body);
+            console.log(req.body.title, req.body.post);
+            res.send(200);
+        } else {
+            res.status(400).send('Malformed request');
+        }
+
+    } catch(e){
+        console.log(e.message);
+    } finally {
+
+    }
+});                                 
+
 app.listen(PORT, ()  => {
     console.log("server is running on ", PORT);
 })
