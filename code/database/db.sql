@@ -1,5 +1,7 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE users(
-    id BINARY(16) PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username VARCHAR(60) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL
 );
@@ -9,21 +11,6 @@ CREATE TABLE posts(
     title VARCHAR(255) NOT NULL,
     body TEXT NOT NULL,
     tags TEXT[10],
-    users_id BINARY REFERENCES users(id),
+    users_id BINARY REFERENCES users(id) ON DELETE CASCADE,
     date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
-
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-DELIMITER $$
-
-CREATE TRIGGER auto_id_on_insert
-BEFORE INSERT ON users 
-FOR EACH ROW
-BEGIN
-    IF NEW.id IS NULL THEN
-        SET NEW.id = UUID_TO_BIN(UUID())
-    END IF;
-END $$
-
-DELIMITER ;
