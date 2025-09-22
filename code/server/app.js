@@ -26,20 +26,21 @@ const databasePool = new sessionPool({
     host: process.env.HOST,
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
-    port: process.env.PORT
+    port: 5432
 });
 
 app.get('/test', async (req, res) => {
+    let client;
     try{
-        const client = await databasePool.connect();
+        client = await databasePool.connect();
         const result = await client.query('SELECT * FROM test;');
         res.json({
             response: result.rows[0].name
         });
     } catch(err) {
-        console.log(err);
+        console.log(err.message);
     } finally {
-        client.end();
+        client.release();
     }
 });
 
