@@ -13,7 +13,7 @@ const app = express();
 
 const options = {
     "origin": "http://localhost:3000",
-    "methods": ["GET", "POST", "DELETE", "UPDATE"],
+    "methods": ["GET", "POST", "DELETE", "PUT"],
     "credentials": true
 };
 
@@ -263,23 +263,42 @@ app.delete('/delete-post', async (req, res) => {
     }
 })
 
-app.update('/update-post', async (req, res) => {
+app.put('/update-post', async (req, res) => {
     if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
-    let client;
+    let client, title, body, query;
     const user_id = req.user.id;
     let {id} = req.body;
+    let param_array;
     id = parseInt(id);
-    const query = 'DELETE FROM posts WHERE id = $1 AND users_id = $2;';
-    
+ 
     if(!(id < 0 || id > 0)) return res.status(400).send('incorrect id parameter');
+    if(req.body['title'] && req.body['body']){
+        query = 'UPDATE posts SET title = $1, body = $2 WHERE users_id = $3 AND id = $4;';
+        title = req.body['title'];
+        body = req.body['body'];
+        param_array = [title, body, user_id, id];
+    } else {
+        if(!(req.body['title'] && req.body['body'])) return res.status(400).send('Missing both title and body');
+        req.body['title']
+        ?() => {
+            query = 'UPDATE posts SET title = $1 WHERE users_id = $2 AND id = $3;'
+            title = req.body['title']
+            param_array = [title, user_id, id];
+        }
+        :() => {
+            query = 'UPDATE posts SET body = $1 WHERE users_id = $2 AND id = $3;';
+            body = req.body['body'];
+            param_array = [body, user_id, id];
+        }
+    }
 
     try{
         client = await databasePool.connect();
         const response = await client.query(
             query,
-            [id, user_id]
+            param_array
         )
-        res.status(204).send('Deletion successful');
+        res.status(200).send('Update successful');
     } catch(e) {
         res.status(500);
     } finally {
