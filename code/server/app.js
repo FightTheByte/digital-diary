@@ -190,7 +190,10 @@ app.post('/post', async (req, res) => {
             client = await databasePool.connect();
             body = req.body['post'];
             title = req.body['title'];
+            if(body.length > 2000) return res.status(400).send('journal entry more than 2000 characters');
+            if(title.length > 255) return res.status(400).send('journal title more than 255 characters');
             if(req.body['tags']){
+                if(req.body['tags'].length > 10) return res.status(400).send('More than 10 tags');
                 query = 'INSERT INTO posts (title, body, users_id, tags) VALUES ($1, $2, $3, $4);';
                 tags = req.body.tags;
             } else {
@@ -259,6 +262,31 @@ app.delete('/delete-post', async (req, res) => {
         client.release();
     }
 })
+
+app.update('/update-post', async (req, res) => {
+    if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
+    let client;
+    const user_id = req.user.id;
+    let {id} = req.body;
+    id = parseInt(id);
+    const query = 'DELETE FROM posts WHERE id = $1 AND users_id = $2;';
+    
+    if(!(id < 0 || id > 0)) return res.status(400).send('incorrect id parameter');
+
+    try{
+        client = await databasePool.connect();
+        const response = await client.query(
+            query,
+            [id, user_id]
+        )
+        res.status(204).send('Deletion successful');
+    } catch(e) {
+        res.status(500);
+    } finally {
+        client.release();
+    }
+})
+
 
 app.listen(PORT, ()  => {
     console.log("server is running on ", PORT);
