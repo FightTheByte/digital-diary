@@ -176,14 +176,14 @@ app.get('/test', async (req, res) => {
 });
 
 app.post('/post', async (req, res) => {
+    if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
     let client;
     let query;
     let tags;
     let body;
     let title;
     let array_index = 0;
-    let user_id = 'edef587d-f738-4d72-90ca-9e307192d651';
-
+    let user_id = req.user.id
     try {
         if(req.body['title'] && req.body['post']){
             client = await databasePool.connect();
@@ -208,7 +208,7 @@ app.post('/post', async (req, res) => {
         
         res.send(200);
     } catch(e){
-        res.status(500).send(e);
+        res.status(500).send(e.message);
     } finally {
         client.release();
     }
