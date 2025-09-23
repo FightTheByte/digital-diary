@@ -5,6 +5,7 @@ const passport = require('passport');
 const session = require('express-session');
 const sessionPool = require('pg').Pool;
 const dotenv = require('dotenv');
+const pgSession = require('connect-pg-simple')(session);
 dotenv.config();
 
 const app = express();
@@ -28,6 +29,29 @@ const databasePool = new sessionPool({
     database: process.env.DATABASE,
     port: 5432
 });
+
+const sessionConfig = {
+    store: new pgSession({
+        pool: databasePool,
+        tableName: 'session',
+        createTableIfMissing: true
+    }),
+    name: 'SID',
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 100,
+      secure: false,
+      sameSite: "none",
+      httpOnly: true
+    }
+}
+
+app.use(session(sessionConfig));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.get('/test', async (req, res) => {
     let client;
