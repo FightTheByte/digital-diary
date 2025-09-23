@@ -239,6 +239,32 @@ app.get('/get-posts', async (req, res) => {
     }
 })
 
+app.get('/get-post', async (req, res) => {
+    if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
+    let client;
+    const user_id = req.user.id;
+    let {id} = req.body;
+    id = parseInt(id);
+    const query = 'SELECT title, id, body, date FROM posts WHERE users_id = $1 AND id = $2;'
+    
+    if(!(id < 0 || id > 0)) return res.status(400).send('incorrect id parameter');
+    
+    try{
+        client = await databasePool.connect(); 
+        const response = await client.query(
+            query,
+            [user_id, id]
+        )
+        res.json({
+            response: response.rows[0] 
+        })
+    } catch(e) {
+        res.status(500).send('Unknown server error');
+    } finally { 
+        client.release();
+    }
+})
+
 app.delete('/delete-post', async (req, res) => {
     if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
     let client;
