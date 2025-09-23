@@ -45,19 +45,41 @@ app.get('/test', async (req, res) => {
 });
 
 app.post('/post', async (req, res) => {
+    let client;
+    let query;
+    let tags;
+    let body;
+    let title;
+    let array_index = 0;
+    let user_id = 'edef587d-f738-4d72-90ca-9e307192d651';
+
     try {
         if(req.body['title'] && req.body['post']){
-            //let body = await JSON.parse(req.body);
-            console.log(req.body.title, req.body.post);
-            res.send(200);
+            client = await databasePool.connect();
+            body = req.body['post'];
+            title = req.body['title'];
+            if(req.body['tags']){
+                query = 'INSERT INTO posts (title, body, users_id, tags) VALUES ($1, $2, $3, $4);';
+                tags = req.body.tags;
+            } else {
+                query = 'INSERT INTO posts (title, body, users_id) VALUES ($1, $2, $3);';
+                array_index++;
+            }
         } else {
             res.status(400).send('Malformed request');
         }
 
-    } catch(e){
-        console.log(e.message);
-    } finally {
+        const argument_array = [[title, body, user_id, tags], [title, body, user_id]]
+        const response = await client.query(
+            query,
+            argument_array[array_index]
+        );
 
+        res.send(200);
+    } catch(e){
+        res.status(500).send(e);
+    } finally {
+        client.release();
     }
 });                                 
 
