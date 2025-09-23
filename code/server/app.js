@@ -164,9 +164,10 @@ app.post('/login',
 );
 
 app.get('/logout', (req, res, next) => {
+    if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
     req.logout((err) => {
         if(err) return next(err);
-        res.redirect('/login');
+        res.send('Logged out');
     })
   }
 );
@@ -212,7 +213,52 @@ app.post('/post', async (req, res) => {
     } finally {
         client.release();
     }
-});                                 
+}); 
+
+app.get('/get-posts', async (req, res) => {
+    if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
+    let client;
+    const user_id = req.user.id;
+    const query = 'SELECT title, id, date FROM posts WHERE users_id = $1 ORDER BY date DESC;'
+    try{
+        client = await databasePool.connect(); 
+        const response = await client.query(
+            query,
+            [user_id]
+        )
+        res.json({
+            response: response.rows 
+        })
+    } catch(e) {
+        res.status(500).send('Unknown server error');
+    } finally {
+        client.release();
+    }
+})
+
+app.delete('/delete-post', async (req, res) => {
+    if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
+    let client;
+    const user_id = req.user.id;
+    const {id} = req.body;
+    id = parseInt(id);
+    const query = 'DELETE FROM posts WHERE id = $1 AND users_id = $2;';
+    
+    if(!(id < 0 || id > 0)) return res.status(400).send('incorrect id parameter');
+
+    try{
+        client = await databasePool.connect();
+        const response = await client.query(
+            query,
+            [id, user_id]
+        )
+        res.status(204).send('Deletion successful');
+    } catch(e) {
+        res.status(500).send('unknown server error');
+    } finally {
+        client.release();
+    }
+})
 
 app.listen(PORT, ()  => {
     console.log("server is running on ", PORT);
