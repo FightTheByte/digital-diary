@@ -278,18 +278,18 @@ app.put('/update-post', async (req, res) => {
         body = req.body['body'];
         param_array = [title, body, user_id, id];
     } else {
-        if(!(req.body['title'] && req.body['body'])) return res.status(400).send('Missing both title and body');
+        if(!(req.body['title'] || req.body['body'])) return res.status(400).send('Missing both title and body');
         req.body['title']
-        ?() => {
+        ?(() => {
             query = 'UPDATE posts SET title = $1 WHERE users_id = $2 AND id = $3;'
             title = req.body['title']
             param_array = [title, user_id, id];
-        }
-        :() => {
+        })()
+        :(() => {
             query = 'UPDATE posts SET body = $1 WHERE users_id = $2 AND id = $3;';
             body = req.body['body'];
             param_array = [body, user_id, id];
-        }
+        })()
     }
 
     try{
