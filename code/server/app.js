@@ -13,7 +13,7 @@ const app = express();
 
 const options = {
     "origin": "http://localhost:3000",
-    "method": ["GET", "POST", "DELETE", "UPDATE"],
+    "methods": ["GET", "POST", "DELETE", "UPDATE"],
     "credentials": true
 };
 
@@ -114,8 +114,48 @@ passport.deserializeUser((id, done) => {
     });
 })
 
+app.post('/register', async (req, res) =>{
+    let client, username, password;
+    if(req.body['username'] && req.body['password']){
+        username = req.body.username;
+        password = req.body.password;
+        console.log(req.body, username, password)
+        if(username.length > 60){
+            return res.status(400).send('username character length exceeded 60');
+        }
+        if(password.length > 255){
+            return res.status(400).send('password character length exceeded 255');
+        }
+    } else {
+        return res.status(400).send('Missing username or password');
+    }
+    try{
+        client = await databasePool.connect();
+
+        const duplicate_check = await client.query(
+            'SELECT username FROM users WHERE username = $1;',
+            [username]
+        )
+        if(duplicate_check.rows.length > 0) return res.status(400).send('Username already exists');
+
+        await client.query('BEGIN');
+        const response = client.query(
+            'INSERT INTO users (username, password) VALUES ($1, $2);',
+            [username, password]
+        );
+        client.query('COMMIT');
+        res.send('success');
+    } catch(e) {
+        client.query('ROLLBACK');
+        res.status(500).send('Unknown Server Error');
+    } finally{
+        client.release();
+    }
+
+})
+
 app.post('/login',
-  passport.authenticate('local', { failureRedirect: '/login', failureMessage: true }),
+  passport.authenticate('local', {failureMessage: true }),
   function(req, res) {
     res.send('hi');
   }
@@ -130,18 +170,7 @@ app.get('/logout', (req, res, next) => {
 );
 
 app.get('/test', async (req, res) => {
-    let client;
-    try{
-        client = await databasePool.connect();
-        const result = await client.query('SELECT * FROM test;');
-        res.json({
-            response: result.rows[0].name
-        });
-    } catch(err) {
-        console.log(err.message);
-    } finally {
-        client.release();
-    }
+    res.send(req.user);
 });
 
 app.post('/post', async (req, res) => {
