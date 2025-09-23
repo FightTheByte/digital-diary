@@ -121,6 +121,14 @@ app.post('/login',
   }
 );
 
+app.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if(err) return next(err);
+        res.redirect('/login');
+    })
+  }
+);
+
 app.get('/test', async (req, res) => {
     let client;
     try{
