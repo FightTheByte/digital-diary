@@ -240,7 +240,7 @@ app.delete('/delete-post', async (req, res) => {
     if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
     let client;
     const user_id = req.user.id;
-    const {id} = req.body;
+    let {id} = req.body;
     id = parseInt(id);
     const query = 'DELETE FROM posts WHERE id = $1 AND users_id = $2;';
     
@@ -254,7 +254,7 @@ app.delete('/delete-post', async (req, res) => {
         )
         res.status(204).send('Deletion successful');
     } catch(e) {
-        res.status(500).send('unknown server error');
+        res.status(500);
     } finally {
         client.release();
     }
