@@ -138,6 +138,8 @@ app.post('/register', async (req, res) =>{
         )
         if(duplicate_check.rows.length > 0) return res.status(400).send('Username already exists');
 
+        password = await bcrypt.hash(password, 10);
+
         await client.query('BEGIN');
         const response = client.query(
             'INSERT INTO users (username, password) VALUES ($1, $2);',
@@ -157,7 +159,7 @@ app.post('/register', async (req, res) =>{
 app.post('/login',
   passport.authenticate('local', {failureMessage: true }),
   function(req, res) {
-    res.send('hi');
+    res.send('Logged in'); 
   }
 );
 
@@ -203,7 +205,7 @@ app.post('/post', async (req, res) => {
             query,
             argument_array[array_index]
         );
-
+        
         res.send(200);
     } catch(e){
         res.status(500).send(e);
