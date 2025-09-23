@@ -5,6 +5,7 @@ const passport = require('passport');
 const session = require('express-session');
 const sessionPool = require('pg').Pool;
 const dotenv = require('dotenv');
+const LocalStrategy = require('passport-local').Strategy;
 const pgSession = require('connect-pg-simple')(session);
 dotenv.config();
 
@@ -52,6 +53,73 @@ app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 
+async function findByUsername(username, callback){
+    let client;
+    try{
+        client = await databasePool.connect();
+        const response = await client.query(
+            'SELECT * FROM users WHERE username = $1;',
+            [username]
+        );
+        callback(null, response.rows[0])
+
+    } catch(e) {
+        callback(e);
+    } finally {
+        client.release();
+    }
+}
+
+async function findById(id, callback){
+    let client;
+    try{
+        client = await databasePool.connect();
+        const response = await client.query(
+            'SELECT * FROM users WHERE id = $1;',
+            [id]
+        );
+        callback(null, response.rows[0]);
+    } catch(e){
+        callback(e.message);
+    } finally {
+        client.release();
+    }
+}
+
+passport.use( new LocalStrategy(
+    function(username, password, done){
+        findByUsername(username, async (err, user) => {
+            if(err) return done(err);
+
+            if(!user) return done(null, false);
+
+            if(await bcrypt.compare(password, user.password)){
+                return done(null, user);
+            }
+
+            return done(null, false);
+        })
+    }
+))
+
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+})
+
+passport.deserializeUser((id, done) => {
+    findById(id, (err, user) => {
+        if(err) return done(err);
+        done(null, user);
+    });
+})
+
+app.post('/login',
+  passport.authenticate('local', { failureRedirect: '/login', failureMessage: true }),
+  function(req, res) {
+    res.send('hi');
+  }
+);
 
 app.get('/test', async (req, res) => {
     let client;
