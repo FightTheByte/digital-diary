@@ -14,14 +14,14 @@ const app = express();
 const options = {
     "origin": "http://localhost:3000",
     "methods": ["GET", "POST", "DELETE", "PUT"],
-    "credentials": true
+    credentials: true
 };
 
 app.use(express.json());
 app.use(cors(options));
 const PORT = 4000;
 
-console.log(process.env.PASSWORD);
+
 
 const databasePool = new sessionPool({
     user: process.env.USER,
@@ -44,7 +44,7 @@ const sessionConfig = {
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 100,
       secure: false,
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true
     }
 }
@@ -112,6 +112,14 @@ passport.deserializeUser((id, done) => {
         if(err) return done(err);
         done(null, user);
     });
+})
+
+app.get('/authenticated', (req, res) => {
+    if(req.isAuthenticated()){
+        res.send(true);
+    } else {
+        res.send(false);
+    }
 })
 
 app.post('/register', async (req, res) =>{
