@@ -44,6 +44,13 @@
     border-radius: 100%;
 }
 
+.post-input{
+    width: 30%;
+    height: 50%;
+    font-size: 1.1rem;
+    border-radius: 5px;
+}
+
 textarea{
     resize: none;
     border-radius: 0px;
