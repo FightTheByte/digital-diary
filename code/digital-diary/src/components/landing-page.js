@@ -1,17 +1,46 @@
-import React from "react";
-import { useState } from "react";
-import '../styles/landing-page.css'
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import '../styles/landing-page.css';
 
 export const Landing = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    useEffect(() => {
+        async function authenticated(){
+            const auth = await fetch('http://localhost:4000/authenticated', {
+                method: "GET",
+                credentials: "include"
+            })
+            const jsonResponse = await auth.json();
+            console.log(jsonResponse);
+            if(jsonResponse == true){
+                navigate('/post');
+            }
+        }
+        authenticated()
+    }, [])
+
     async function login(){
-           
+        const response = await fetch(process.env.REACT_APP_LOGIN_URL, {
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            }),
+            credentials: "include"
+        });
+        if(response.status == 200){
+            navigate('/post');
+        }
     }
 
     function register(){
-
+        navigate('/register');
     }
 
     return(
@@ -35,6 +64,9 @@ export const Landing = () => {
                                         type="password"
                                         id="landing-fields"
                                         placeholder="Password..."
+                                        onChange={(e) => {
+                                            setPassword(e.target.value)
+                                        }}
                                     ></input>
 
                             </div>
