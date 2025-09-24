@@ -1,6 +1,7 @@
 import '../styles/post-page.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import bookmark from '../assets/bookmark.png';
 
 export const CreatePost = () => {
     const [binderArray, setBinderArray] = useState(Array(6));
@@ -70,22 +71,30 @@ export const CreatePost = () => {
     return(
         <>
             <div className="post-background">
-                <div className="post-book">
-                    <div id="post-binder">
-                        {
-                          binderArray
-                        }
-                    </div>
-                    <div id="post-page">
-                        <textarea
-                            maxLength={2000}
-                            minLength={1}
-                            resize="none"
-                            placeholder='Today I....'
-                            onChange={(e) => {
-                                setBody(e.target.value);
+                <div className='post-container'>
+                    <div className="post-book">
+                        <img 
+                            src={bookmark}
+                            onClick={() => {
+                                navigate('/read')
                             }}
-                        ></textarea>
+                        />
+                       <div id="post-binder">
+                           {
+                             binderArray
+                           }
+                       </div>
+                       <div id="post-page">
+                           <textarea
+                               maxLength={2000}
+                               minLength={1}
+                               resize="none"
+                               placeholder='Today I....'
+                               onChange={(e) => {
+                                   setBody(e.target.value);
+                               }}
+                           ></textarea>
+                       </div>
                     </div>
                 </div>
                 <input 
@@ -116,6 +125,7 @@ export const CreatePost = () => {
                 </input>
                 <div>
                     <button
+                        className='post-button'
                         onClick={() => {
                             post();
                         }}
