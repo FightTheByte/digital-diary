@@ -1,0 +1,53 @@
+.post-book{
+    border: 1px solid black;
+    width: 100vw;
+    max-width: 40%;
+    display: grid;
+    margin-top: 2rem;
+    grid-template-columns: 1.2fr 6fr;
+    gap: 0rem;
+    align-self: start;
+}
+
+.post-background{
+    background-color: #D9D9D9;
+    min-height: 95vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    display: grid;
+    grid-template-rows: 9fr 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
+#post-binder{
+    background-color: rgb(54, 137, 201);
+    height: 70vh;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+#post-page{
+    background-color: #ffffff;
+    display: flex;
+}
+
+.binder-holes{
+    background-color: white;
+    width: 15%;
+    height: 15%;
+    justify-self: center;
+    align-self: center;
+    border-radius: 100%;
+}
+
+textarea{
+    resize: none;
+    border-radius: 0px;
+    border: 0px;
+    width: 100%;
+    font-size: 1.35rem;
+}
