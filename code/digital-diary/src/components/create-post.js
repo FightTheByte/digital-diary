@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 export const CreatePost = () => {
     const [binderArray, setBinderArray] = useState(Array(6));
+    const [body, setBody] = useState(false);
+    const [title, setTitle] = useState(false);
+    const [tags, setTags] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,13 +28,44 @@ export const CreatePost = () => {
                 credentials: "include"
             })
             const jsonResponse = await auth.json();
-            console.log(jsonResponse);
+
             if(jsonResponse != true){
                 navigate('/');
             }
         }
         authenticated()
     }, [])
+
+    async function post(){
+        let requestBody;
+        if(body && title && tags){
+            requestBody = {
+                title: title,
+                post: body,
+                tags, tags
+            }
+        }
+
+        if(body && title && !tags){
+            requestBody = {
+                title: title,
+                post: body
+            }
+        }
+        console.log(requestBody)
+        const response = await fetch('http://localhost:4000/post', {
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(requestBody)
+        })
+        console.log(response.status);
+        if(response.status == 200){
+            window.location.reload(true);
+        }
+    }
 
     return(
         <>
@@ -48,13 +82,45 @@ export const CreatePost = () => {
                             minLength={1}
                             resize="none"
                             placeholder='Today I....'
+                            onChange={(e) => {
+                                setBody(e.target.value);
+                            }}
                         ></textarea>
                     </div>
                 </div>
-                <input type="text"></input>
-                <input type="text"></input>
+                <input 
+                    type="text"
+                    maxLength={255}
+                    placeholder='Title'
+                    className="post-input"
+                    onChange={(e) => {
+                        setTitle(e.target.value);
+                    }}
+                >
+                </input>
+                <input 
+                    type="text"
+                    placeholder='Tags: Happy Sad Software'
+                    className="post-input"
+                    onChange={(e) => {
+                        let list = e.target.value
+                        list = list.split(" ");
+                        if(list.length > 10){
+                            alert("Maximum of ten tags")
+                        } else {
+                            setTags(list);
+                        }
+                        
+                    }}
+                >
+                </input>
                 <div>
-                    <button>Save</button>
+                    <button
+                        onClick={() => {
+                            post();
+                        }}
+                    >Save
+                    </button>
                 </div>
             </div>
         </>
