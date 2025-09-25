@@ -110,10 +110,11 @@
 
 .search-tools{
     display:grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 3rem;
     justify-items: center;
     align-content: center;
+    align-items: center;
 }
 
 .write-icon{
@@ -133,4 +134,25 @@
 
 .write-icon:hover{
     filter: invert(100%)
+}
+
+
+.account-page{
+    border: 2px black solid;
+    height: 2rem;
+    align-items: center;
+    display:flex;
+}
+
+.account-page:hover{
+    box-shadow: 5px 10px rgba(96, 171, 228, 0.527);
+}
+
+.read-area{
+    overflow: scroll;
+    height: 80vh;
+}
+
+.read-area::-webkit-scrollbar{
+    display: none;
 }
