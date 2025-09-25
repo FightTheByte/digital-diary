@@ -146,6 +146,14 @@ export const ReadPosts = () => {
                         <option value="title asc">Title Ascending</option>
                       </select>
                     </div>
+                    <div
+                        className="account-page"
+                        onClick={() => {
+                          navigate('/account');
+                        }}
+                      >
+                        <h4>Account</h4>
+                    </div>
                   </div>
                   <div
                     className="read-post"
@@ -210,6 +218,7 @@ export const ReadPosts = () => {
                     onClick={() => {
                       setReading(false);
                     }}
+                    className="read-area"
               >
                 <p
                   style={{
