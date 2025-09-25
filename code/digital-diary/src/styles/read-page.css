@@ -1,17 +1,16 @@
 .read-post{
-    justify-items: center;
-    gap: 1rem;
-    width: 100%;
-    overflow: scroll;
+    justify-items: end;
+    width: 60rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
-
 .read-post::-webkit-scrollbar{
     display: none;
 }
 
 .posts{
     display: grid;
-    grid-template-columns: 10rem 30rem 5rem;
+    grid-template-columns: 15rem 25rem 5rem;
     gap: 2rem;
     align-items: center;
     justify-items: center;
@@ -21,12 +20,25 @@
 .delete{
     justify-self: center;
     align-self: center;
+    background-color: #C97636;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.delete:hover{
+    background-color: red;
 }
 
 .post-container{
     display: grid;
-    grid-template-columns: 1fr 10fr;
+    gap: 0;
+    grid-template-columns: 1fr 7fr;
     margin-top: 1rem;
+    margin-left: 2rem;
+    justify-content: end;
 }
 
 .tabs{
@@ -37,14 +49,14 @@
 .post-layout{
     display: grid;
     grid-template-rows: 1fr 8fr 1fr;
-    justify-content: center;
-    align-content: center;
+    justify-items: center;
 }
 
 .read-background{
     background-color: #D9D9D9;
     min-height: 100%;
-    height: 100vh;
+    height: 95vh;
+    width: 95vw;
     margin: 0;
     padding: 0;
     display: flex;
@@ -65,7 +77,7 @@
 .read-book{
     border: 1px solid black;
     width: 100vw;
-    max-width: 50%;
+    max-width: 70%;
     display: grid;
     margin-top: 2rem;
     grid-template-columns: 1.2fr 6fr;
@@ -88,5 +100,33 @@
     background-color: #ffffff;
     display: flex;
     height: 80vh;
+    width: 100%;
+    justify-content: center;
 }
 
+.search-tools{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    justify-items: center;
+    align-content: center;
+}
+
+.write-icon{
+    width: 3rem;
+}
+
+.write-icon-container{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.write-icon-container:hover{
+    background-color: rgb(54, 137, 201);
+    border-radius: 1rem;
+}
+
+
+.write-icon:hover{
+    filter: invert(100%)
+}
