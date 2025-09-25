@@ -36,6 +36,8 @@ export const CreatePost = () => {
   }, []);
 
   async function post() {
+    if(!body || !title) return;
+    
     let requestBody;
     if (body && title && tags) {
       requestBody = {
@@ -61,7 +63,7 @@ export const CreatePost = () => {
       credentials: "include",
       body: JSON.stringify(requestBody),
     });
-    console.log(response.status);
+   
     if (response.status == 200) {
       window.location.reload(true);
     }
