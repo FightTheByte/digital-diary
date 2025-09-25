@@ -1,10 +1,26 @@
 import { useEffect, useState } from "react";
 import "../styles/read-page.css";
+import { useNavigate } from "react-router-dom";
+import writeIcon from '../assets/write.png';
 
 export const ReadPosts = () => {
   const [posts, setPosts] = useState([]);
+    const navigate = useNavigate();
 
   useEffect(() => {
+    async function authenticated(){
+            const auth = await fetch('http://localhost:4000/authenticated', {
+                method: "GET",
+                credentials: "include"
+            })
+            const jsonResponse = await auth.json();
+
+            if(jsonResponse != true){
+                navigate('/');
+            }
+        }
+        
+
     async function getPosts() {
       const response = await fetch("http://localhost:4000/get-posts", {
         method: "GET",
@@ -13,8 +29,32 @@ export const ReadPosts = () => {
       const jsonResponse = await response.json();
       setPosts(jsonResponse.response);
     }
+
+    authenticated();
     getPosts();
   }, []);
+
+  async function deletePost(id, index){
+      const response = await fetch("http://localhost:4000/delete-post", {
+        method: 'DELETE',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id
+        }),
+        credentials: 'include'
+      })
+      if(response.status == 204){
+        let temp = posts;
+        temp = await temp.filter((post) => {
+            return post.id != id
+            ?true
+            :false
+        })
+        setPosts(temp);
+      }
+  }
 
   return (
     <>
@@ -24,7 +64,21 @@ export const ReadPosts = () => {
             <div className="read-binder"></div>
                 <div className="read-page">
                     <div className="post-layout">
-                        <div className="search-tools"><p>tools</p></div>
+                        <div className="search-tools">
+                            <input 
+                                type='text'
+                                placeholder="Search By Title or Tags"
+                            ></input>
+                            <div>
+                                <label for="filter">Sort By </label>
+                                <select name="filter">
+                                    <option>Date Ascending</option>
+                                    <option>Date Descending</option>
+                                    <option>Title Descending</option>
+                                    <option>Title Ascending</option>
+                                </select>
+                            </div>
+                        </div>
                         <div
                           className="read-post"
                           style={{
@@ -40,14 +94,30 @@ export const ReadPosts = () => {
                                     <div key={element.id} className="posts">
                                       <h4>{element.title}</h4>
                                       <p>{new Date(element.date).toUTCString()}</p>
-                                      <div className="delete">x</div>
+                                      <div 
+                                        className="delete"
+                                        onClick={() => {
+                                            deletePost(element.id);
+                                        }}
+                                    >x</div>
                                     </div>
                                   </div>
                                 );
                               })
                             : null}
                         </div>
-                        <div className="write-icon"><p>write</p></div>
+                        <div 
+                            className="write-icon-container"
+                            onClick={() => {
+                                navigate('/post')
+                            }}
+                        >
+                            <img 
+                                src={writeIcon}
+                                className="write-icon"
+                            />
+                            
+                        </div>
                     </div>
                 </div>
           </div>
