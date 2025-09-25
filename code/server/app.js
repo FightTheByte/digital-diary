@@ -230,7 +230,7 @@ app.get('/get-posts', async (req, res) => {
     if(!req.isAuthenticated()) return res.status(403).send('Unauthorised');
     let client;
     const user_id = req.user.id;
-    const query = 'SELECT title, id, date FROM posts WHERE users_id = $1 ORDER BY date DESC;'
+    const query = 'SELECT title, id, date, tags, body FROM posts WHERE users_id = $1 ORDER BY date DESC;'
     try{
         client = await databasePool.connect(); 
         const response = await client.query(
