@@ -32,13 +32,17 @@
     background-color: red;
 }
 
-.post-container{
+.post-container-read{
     display: grid;
     gap: 0;
     grid-template-columns: 1fr 7fr;
     margin-top: 1rem;
     margin-left: 2rem;
     justify-content: end;
+}
+
+.post-container-read:hover{
+    box-shadow: 10px 10px 10px rgba(96, 171, 228, 0.611);
 }
 
 .tabs{
