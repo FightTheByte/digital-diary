@@ -1,0 +1,28 @@
+.account-container{
+    background-color: #D9D9D9;
+    width:100%;
+    height: 98dvh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.read-book{
+    border: 2px solid black;
+    width: 100vw;
+    max-width: 70%;
+    display: grid;
+    grid-template-columns: 1.2fr 6fr;
+    gap: 0rem;
+    margin-bottom: 5rem;
+}
+
+.read-binder{
+    background-color: rgb(54, 137, 201);
+    height: 80vh;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
