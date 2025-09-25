@@ -5,7 +5,9 @@ import writeIcon from '../assets/write.png';
 
 export const ReadPosts = () => {
   const [posts, setPosts] = useState([]);
-    const navigate = useNavigate();
+  const [filter, setFilter] = useState("")
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     async function authenticated(){
@@ -56,6 +58,40 @@ export const ReadPosts = () => {
       }
   }
 
+  function handleFilter(filter){
+    setFilter(filter)
+    let new_array = [];
+    if(filter == "title asc"){
+      new_array = posts.sort((a, b) =>{
+        if(a.title < b.title) return -1;
+        if(a.title > b.title) return 1;
+        return 0;
+      })
+    }
+    if(filter == "title dsc"){
+      new_array = posts.sort((a, b) =>{
+        if(a.title < b.title) return 1;
+        if(a.title > b.title) return -1;
+        return 0;
+      })
+    }
+    if(filter == "date dsc"){
+      new_array = posts.sort((a, b) =>{
+        if(a.date < b.date) return 1;
+        if(a.date > b.date) return -1;
+        return 0;
+      })
+    }  
+    if(filter == "date asc"){
+      new_array = posts.sort((a, b) =>{
+        if(a.date < b.date) return -1;
+        if(a.date > b.date) return 1;
+        return 0;
+      })
+    }
+    if(new_array.length > 0)setPosts(new_array);
+  }
+
   return (
     <>
       <div className="read-background">
@@ -71,11 +107,16 @@ export const ReadPosts = () => {
                             ></input>
                             <div>
                                 <label for="filter">Sort By </label>
-                                <select name="filter">
-                                    <option>Date Ascending</option>
-                                    <option>Date Descending</option>
-                                    <option>Title Descending</option>
-                                    <option>Title Ascending</option>
+                                <select 
+                                  name="filter"
+                                  onChange={(e) => {
+                                    handleFilter(e.target.value)
+                                  }}
+                                >
+                                    <option value="date asc">Date Ascending</option>
+                                    <option value="date dsc">Date Descending</option>
+                                    <option value="title dsc">Title Descending</option>
+                                    <option value="title asc">Title Ascending</option>
                                 </select>
                             </div>
                         </div>
