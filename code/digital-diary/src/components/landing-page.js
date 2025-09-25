@@ -59,6 +59,9 @@ export const Landing = () => {
                                         onChange={(e) => {
                                             setUsername(e.target.value)
                                         }}
+                                        onKeyDown={(e) => {
+                                            if(e.key == "Enter") login();
+                                        }}
                                     ></input>                       
                                     <input 
                                         type="password"
@@ -66,6 +69,9 @@ export const Landing = () => {
                                         placeholder="Password..."
                                         onChange={(e) => {
                                             setPassword(e.target.value)
+                                        }}
+                                        onKeyDown={(e) => {
+                                            if(e.key == "Enter") login();
                                         }}
                                     ></input>
 
