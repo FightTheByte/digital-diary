@@ -60,6 +60,9 @@ export const Landing = () => {
         if(response.status == 200){
             navigate('/post');
         }
+        if(response.status == 400){
+            alert("username already exists");
+        }
     }
 
     return(
@@ -75,6 +78,7 @@ export const Landing = () => {
                                         type="text"
                                         id="landing-fields"
                                         placeholder="Username..."
+                                        maxLength={60}
                                         onChange={(e) => {
                                             setUsername(e.target.value)
                                         }}
@@ -86,6 +90,7 @@ export const Landing = () => {
                                         type="password"
                                         id="landing-fields"
                                         placeholder="Password..."
+                                        maxLength={255}
                                         onChange={(e) => {
                                             setPassword(e.target.value)
                                         }}
