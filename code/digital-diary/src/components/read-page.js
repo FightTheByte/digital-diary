@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import writeIcon from "../assets/write.png";
 
 export const ReadPosts = () => {
+  const [binderArray, setBinderArray] = useState([]);
   const [posts, setPosts] = useState([]);
   const [postsBackup, setPostsBackup] = useState([]);
   const [reading, setReading] = useState(false);
@@ -33,8 +34,17 @@ export const ReadPosts = () => {
       setPostsBackup(jsonResponse.response);
     }
 
+    async function populateBinder() {
+      let holder = Array.from({ length: 6 }, (element, index) => {
+        return <div className="binder-holes"></div>;
+      });
+      setBinderArray(holder);
+    }
+    
+
     authenticated();
     getPosts();
+    populateBinder();
   }, []);
 
   async function deletePost(id, index) {
@@ -119,7 +129,7 @@ export const ReadPosts = () => {
       <div className="read-background">
         <div className="read-container">
           <div className="read-book">
-            <div className="read-binder"></div>
+            <div className="read-binder">{binderArray}</div>
             {
               !reading
               ?<div className="read-page">
