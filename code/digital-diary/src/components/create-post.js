@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import bookmark from "../assets/bookmark.png";
 
 export const CreatePost = () => {
-  const [binderArray, setBinderArray] = useState(Array(6));
+  const [binderArray, setBinderArray] = useState();
   const [body, setBody] = useState(false);
   const [title, setTitle] = useState(false);
   const [tags, setTags] = useState(false);
