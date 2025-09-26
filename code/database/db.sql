@@ -8,7 +8,7 @@ CREATE TABLE users(
 
 CREATE TABLE posts(
     id SERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
+    title VARCHAR(15) NOT NULL,
     body TEXT NOT NULL,
     tags TEXT[10],
     users_id UUID REFERENCES users(id) ON DELETE CASCADE,
