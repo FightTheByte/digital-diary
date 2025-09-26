@@ -86,15 +86,15 @@ export const ReadPosts = () => {
     }
     if (filter == "date dsc") {
       new_array.sort((a, b) => {
-        if (a.date < b.date) return 1;
-        if (a.date > b.date) return -1;
+        if (a.date < b.date) return -1;
+        if (a.date > b.date) return 1;
         return 0;
       });
     }
     if (filter == "date asc") {
       new_array.sort((a, b) => {
-        if (a.date < b.date) return -1;
-        if (a.date > b.date) return 1;
+        if (a.date < b.date) return 1;
+        if (a.date > b.date) return -1;
         return 0;
       });
     }
