@@ -24,6 +24,7 @@ const options = {
 
 app.use(express.json());
 app.use(cors(options));
+app.options("*", cors(corsOptions)); 
 const PORT = process.env.PORT || 4000;
 
 
@@ -51,8 +52,8 @@ const sessionConfig = {
     saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 100,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       httpOnly: true
     }
 }
