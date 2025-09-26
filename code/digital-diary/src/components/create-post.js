@@ -97,7 +97,7 @@ export const CreatePost = () => {
         <div className="input-container">
             <input
               type="text"
-              maxLength={255}
+              maxLength={15}
               placeholder="Title"
               className="post-input"
               onChange={(e) => {
