@@ -11,6 +11,8 @@ dotenv.config();
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 const options = {
     "origin": [
         "http://localhost:3000",
