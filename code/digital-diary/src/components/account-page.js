@@ -16,7 +16,7 @@ export const Account = () => {
   const data = {
     labels: [
       'Journal Pages',
-      'No Journal Pages'
+      'Days without page'
     ],
     datasets: [{
       label: ['Percentage of the month %'],
