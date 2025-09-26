@@ -24,11 +24,12 @@ const PORT = process.env.PORT || 4000;
 
 
 const databasePool = new sessionPool({
-    user: process.env.USER,
-    host: process.env.HOST,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-    port: process.env.DBPORT
+    user: process.env.DBUSER,
+    host: process.env.DBHOST,
+    password: process.env.DBPASSWORD,
+    database: process.env.DBDATABASE,
+    port: process.env.DBPORT,
+    ssl: { rejectUnauthorized: false } 
 });
 
 const sessionConfig = {
@@ -38,7 +39,7 @@ const sessionConfig = {
         createTableIfMissing: true
     }),
     name: 'SID',
-    secret: process.env.SECRET,
+    secret: process.env.DBSECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
