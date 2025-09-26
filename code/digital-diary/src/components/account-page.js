@@ -1,10 +1,43 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/account-page.css";
+import {Chart, ArcElement, Tooltip, Legend} from 'chart.js';
+import {Pie} from 'react-chartjs-2';
+
+Chart.register(ArcElement, Tooltip, Legend);
 
 export const Account = () => {
-  const [username, setUsername] = useState("");
+
+  const [days, setDays] = useState();
+  const [writtenDays, setWrittenDays] = useState();
   const navigate = useNavigate();
+
+  const data = {
+    labels: [
+      'Journal Pages',
+      'No Journal Pages'
+    ],
+    datasets: [{
+      label: ['Percentage of the month %'],
+      data: [((writtenDays/days)*100), 100],
+      backgroundColor: [
+        'rgb(54, 137, 201)',
+        'rgb(201, 118, 54)'
+      ]
+    }]
+  };
+
+  const options = {
+    responsive: false,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        position: "bottom"
+      }
+    }
+  }
+
+
     
   useEffect(() => {
     async function authenticated() {
@@ -18,7 +51,66 @@ export const Account = () => {
         navigate("/");
       }
     }
+
+    async function getPosts() {
+      const response = await fetch("http://localhost:4000/get-posts", {
+        method: "GET",
+        credentials: "include",
+      });
+      const jsonResponse = await response.json();
+      return jsonResponse.response;
+    }
+
+    async function populatePosts(){
+      let response = await getPosts();
+      let current_month = new Date().getMonth();
+      let current_year = new Date().getFullYear();
+      let days; 
+
+      switch(current_month){
+        case 8:
+        case 3:
+        case 5:
+        case 10:
+          days = 30;
+          break;
+        case 0:
+        case 1:
+          if(current_year % 100 === 0 ? current_year % 400 === 0 : current_year % 4 === 0){
+            days = 28;
+          } else {
+            days = 29;
+          }
+          break;
+        case 2:
+        case 4:
+        case 6:
+        case 7:
+        case 9:
+        case 11:
+          days = 31;
+          break;
+        
+      }
+
+      const posts_array = response.filter(post => {
+        return new Date(post.date).getMonth() == current_month && new Date(post.date).getFullYear == current_year
+        ? false
+        : true
+      });
+      setDays(days);
+
+      const days_array = posts_array.map(post => {
+        return new Date(post.date).getDate();
+      })
+      
+      let days_set = new Set(days_array);
+      setWrittenDays(days_set.size);
+    
+    }
+
     authenticated();
+    populatePosts();
   }, []);
 
   function logout() {
@@ -31,34 +123,49 @@ export const Account = () => {
   return (
     <>
       <div className="account-container">
-        <div className="read-container">
-          <div className="read-book">
-            <div className="read-binder"></div>
-            <div className="read-page">
+          <div className="acc-book">
+            <div className="account-binder"></div>
+            <div className="acc-page">
+                <navbar className='account-navbar'>
+                    <div
+                        onClick={() => {
+                            logout()
+                        }}
+                        className="selector"
+                    >
+                        <h3>Logout</h3>
+                    </div>
+                    <div
+                        onClick={() => {
+                            navigate('/post')
+                        }}
+                        className="selector"
+                    >
+                        <h3>Journal</h3>
+                    </div>
+                    <div
+                        onClick={() => {
+                            navigate('/read');
+                        }}
+                        className="selector"
+                    >
+                        <h3>Read</h3>
+                    </div>
+                </navbar>
                 <div
-                    onClick={() => {
-                        logout()
-                    }}
-                >
-                    <h3>Logout</h3>
-                </div>
-                <div
-                    onClick={() => {
-                        navigate('/post')
-                    }}
-                >
-                    <h3>Journal</h3>
-                </div>
-                <div
-                    onClick={() => {
-                        navigate('/read')
-                    }}
-                >
-                    <h3>Read</h3>
+                    className="pie-chart-container"
+                >       
+                    <p>Percentage of the month you've made a journal entry</p>
+                    <Pie 
+                        className="chart" 
+                        data={data} 
+                        options={options} 
+                        
+                    />
                 </div>
             </div>
           </div>
-        </div>
+        
       </div>
     </>
   );
