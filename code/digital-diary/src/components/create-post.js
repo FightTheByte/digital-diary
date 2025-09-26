@@ -22,7 +22,7 @@ export const CreatePost = () => {
 
   useEffect(() => {
     async function authenticated() {
-      const auth = await fetch(`${process.env.SERVER_URL}/authenticated`, {
+      const auth = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/authenticated`, {
         method: "GET",
         credentials: "include",
       });
@@ -55,7 +55,7 @@ export const CreatePost = () => {
       };
     }
     console.log(requestBody);
-    const response = await fetch(`${process.env.SERVER_URL}/post`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/post`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
