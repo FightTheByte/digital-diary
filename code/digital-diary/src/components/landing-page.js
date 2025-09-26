@@ -9,7 +9,7 @@ export const Landing = () => {
 
     useEffect(() => {
         async function authenticated(){
-            const auth = await fetch('http://localhost:4000/authenticated', {
+            const auth = await fetch(`${process.env.SERVER_URL}/authenticated`, {
                 method: "GET",
                 credentials: "include"
             })
@@ -24,7 +24,7 @@ export const Landing = () => {
 
     async function login(){
         if(username == "" || password == "") return;
-        const response = await fetch(process.env.REACT_APP_LOGIN_URL, {
+        const response = await fetch(`${process.env.SERVER_URL}/login`, {
             method: "POST",
             headers:{
                 'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ export const Landing = () => {
 
     async function register(){
         if(username == "" || password == "") return;
-        const response = await fetch('http://localhost:4000/register', {
+        const response = await fetch(`${process.env.SERVER_URL}/register`, {
             method: "POST",
             headers:{
                 'Content-Type': 'application/json'

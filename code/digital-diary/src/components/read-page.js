@@ -13,7 +13,7 @@ export const ReadPosts = () => {
 
   useEffect(() => {
     async function authenticated() {
-      const auth = await fetch("http://localhost:4000/authenticated", {
+      const auth = await fetch(`${process.env.SERVER_URL}/authenticated`, {
         method: "GET",
         credentials: "include",
       });
@@ -25,7 +25,7 @@ export const ReadPosts = () => {
     }
 
     async function getPosts() {
-      const response = await fetch("http://localhost:4000/get-posts", {
+      const response = await fetch(`${process.env.SERVER_URL}/get-posts`, {
         method: "GET",
         credentials: "include",
       });
@@ -48,7 +48,7 @@ export const ReadPosts = () => {
   }, []);
 
   async function deletePost(id, index) {
-    const response = await fetch("http://localhost:4000/delete-post", {
+    const response = await fetch(`${process.env.SERVER_URL}/delete-post`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

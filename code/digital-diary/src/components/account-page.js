@@ -43,7 +43,7 @@ export const Account = () => {
     
   useEffect(() => {
     async function authenticated() {
-      const auth = await fetch("http://localhost:4000/authenticated", {
+      const auth = await fetch(`${process.env.SERVER_URL}/authenticated`, {
         method: "GET",
         credentials: "include",
       });
@@ -55,7 +55,7 @@ export const Account = () => {
     }
 
     async function getPosts() {
-      const response = await fetch("http://localhost:4000/get-posts", {
+      const response = await fetch(`${process.env.SERVER_URL}/get-posts`, {
         method: "GET",
         credentials: "include",
       });
@@ -131,7 +131,7 @@ export const Account = () => {
   }, []);
 
   function logout() {
-    fetch("http://localhost:4000/logout", {
+    fetch(`${process.env.SERVER_URL}/logout`, {
         credentials:'include'
     });
     navigate('/');
