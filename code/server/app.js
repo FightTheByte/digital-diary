@@ -122,12 +122,11 @@ app.get('/authenticated', (req, res) => {
     }
 })
 
-app.post('/register', async (req, res) =>{
+app.post('/register', async (req, res, next) =>{
     let client, username, password;
     if(req.body['username'] && req.body['password']){
         username = req.body.username;
         password = req.body.password;
-        console.log(req.body, username, password)
         if(username.length > 60){
             return res.status(400).send('username character length exceeded 60');
         }
@@ -149,12 +148,22 @@ app.post('/register', async (req, res) =>{
         password = await bcrypt.hash(password, 10);
 
         await client.query('BEGIN');
-        const response = client.query(
-            'INSERT INTO users (username, password) VALUES ($1, $2);',
+        const response = await client.query(
+            'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username;',
             [username, password]
         );
         client.query('COMMIT');
-        res.send('success');
+
+        const user = { 
+            id: response.rows[0].id,
+            username: response.rows[0].username
+        };
+        
+        req.login(user, (err) => {
+            if(err) return next(err);
+            res.send('success');
+        })
+        
     } catch(e) {
         client.query('ROLLBACK');
         res.status(500).send('Unknown Server Error');
@@ -199,7 +208,7 @@ app.post('/post', async (req, res) => {
             body = req.body['post'];
             title = req.body['title'];
             if(body.length > 2000) return res.status(400).send('journal entry more than 2000 characters');
-            if(title.length > 255) return res.status(400).send('journal title more than 255 characters');
+            if(title.length > 15) return res.status(400).send('journal title more than 255 characters');
             if(req.body['tags']){
                 if(req.body['tags'].length > 10) return res.status(400).send('More than 10 tags');
                 query = 'INSERT INTO posts (title, body, users_id, tags) VALUES ($1, $2, $3, $4);';
