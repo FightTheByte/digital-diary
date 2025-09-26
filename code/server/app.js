@@ -24,7 +24,7 @@ const options = {
 
 app.use(express.json());
 app.use(cors(options));
-app.options("*", cors(options)); 
+
 const PORT = process.env.PORT || 4000;
 
 
