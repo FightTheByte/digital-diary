@@ -11,3 +11,145 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+@font-face {
+font-family: 'Rollbox Regular';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Regular'), url('../public/fonts/RollboxRegular-jE2lv.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Italic'), url('../public/fonts/RollboxItalic-DOxlE.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Thin';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Thin'), url('../public/fonts/RollboxThin-ywad5.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Thin Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Thin Italic'), url('../public/fonts/RollboxThinItalic-lgw1X.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Extra Light';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Extra Light'), url('../public/fonts/RollboxExtraLight-p7PYy.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Extra Light Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Extra Light Italic'), url('../public/fonts/RollboxExtraLightItalic-ALyV6.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Light';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Light'), url('../public/fonts/RollboxLight-VGAXy.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Light Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Light Italic'), url('../public/fonts/RollboxLightItalic-qZLr6.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Semi Light';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Semi Light'), url('../public/fonts/RollboxSemiLight-6YzW6.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Semi Light Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Semi Light Italic'), url('../public/fonts/RollboxSemiLightItalic-9YVO5.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Medium';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Medium'), url('../public/fonts/RollboxMedium-JRxYB.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Medium Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Medium Italic'), url('../public/fonts/RollboxMediumItalic-GOxRa.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Semi Bold';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Semi Bold'), url('../public/fonts/RollboxSemiBold-z8EP1.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Semi Bold Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Semi Bold Italic'), url('../public/fonts/ollboxSemiBoldItalic-51Vez.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Bold';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Bold'), url('../public/fonts/RollboxBold-OVxvO.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Bold Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Bold Italic'), url('../public/fonts/RollboxBoldItalic-ZVx0q.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Extra Bold';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Extra Bold'), url('../public/fonts/RollboxExtraBold-3zV4X.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Extra Bold Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Extra Bold Italic'), url('../public/fonts/RollboxExtraBoldItalic-x3Wmj.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Black';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Black'), url('../public/fonts/RollboxBlack-axn3a.woff') format('woff');
+}
+
+@font-face {
+font-family: 'Rollbox Black Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Rollbox Black Italic'), url('../public/fonts/RollboxBlackItalic-Eaxnr.woff') format('woff');
+}

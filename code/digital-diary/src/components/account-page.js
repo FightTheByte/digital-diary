@@ -11,6 +11,7 @@ export const Account = () => {
   const [days, setDays] = useState();
   const [writtenDays, setWrittenDays] = useState();
   const [binderArray, setBinderArray] = useState([]);
+  const [joke, setJoke] = useState();
   const navigate = useNavigate();
 
   const data = {
@@ -117,9 +118,16 @@ export const Account = () => {
     
     }
 
+    async function fetchJoke(){
+      const response = await fetch("https://official-joke-api.appspot.com/random_joke");
+      const jsonResponse = await response.json();
+      setJoke(jsonResponse);
+    }
+
     authenticated();
     populatePosts();
     populateBinder();
+    fetchJoke();
   }, []);
 
   function logout() {
@@ -172,6 +180,13 @@ export const Account = () => {
                         
                     />
                 </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    padding: '0.5rem'
+                  }}
+                >{joke?`${joke.setup} ${joke.punchline}`:null}</div>
             </div>
           </div>
         
