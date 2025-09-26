@@ -84,7 +84,7 @@
     max-width: 70%;
     display: grid;
     margin-top: 2rem;
-    grid-template-columns: 1.2fr 6fr;
+    grid-template-columns: 1fr 6fr;
     gap: 0rem;
     align-self: start;
     position: relative;
