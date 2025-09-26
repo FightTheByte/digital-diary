@@ -31,7 +31,7 @@ const databasePool = new sessionPool({
     port: process.env.DBPORT,
     max: 30,
     idleTimeoutMillis: 30000,
-    ssl: { rejectUnauthorized: false } 
+    ssl: false 
 });
 
 const sessionConfig = {
