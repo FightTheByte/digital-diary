@@ -20,7 +20,7 @@ export const Account = () => {
     ],
     datasets: [{
       label: ['Percentage of the month %'],
-      data: [((writtenDays/days)*100), 100],
+      data: [((writtenDays/days)*100), (100 - ((writtenDays/days)*100))],
       backgroundColor: [
         'rgb(54, 137, 201)',
         'rgb(201, 118, 54)'
