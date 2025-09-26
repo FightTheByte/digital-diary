@@ -9,7 +9,7 @@ export const Landing = () => {
 
     useEffect(() => {
         async function authenticated(){
-            const auth = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/authenticated`, {
+            const auth = await fetch(`${process.env.REACT_APP_SERVER_URL}/authenticated`, {
                 method: "GET",
                 credentials: "include"
             })
@@ -24,7 +24,7 @@ export const Landing = () => {
 
     async function login(){
         if(username == "" || password == "") return;
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/login`, {
             method: "POST",
             headers:{
                 'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ export const Landing = () => {
 
     async function register(){
         if(username == "" || password == "") return;
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/register`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/register`, {
             method: "POST",
             headers:{
                 'Content-Type': 'application/json'

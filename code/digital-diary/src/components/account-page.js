@@ -43,7 +43,7 @@ export const Account = () => {
     
   useEffect(() => {
     async function authenticated() {
-      const auth = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/authenticated`, {
+      const auth = await fetch(`${process.env.REACT_APP_SERVER_URL}/authenticated`, {
         method: "GET",
         credentials: "include",
       });
@@ -55,7 +55,7 @@ export const Account = () => {
     }
 
     async function getPosts() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/get-posts`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/get-posts`, {
         method: "GET",
         credentials: "include",
       });
@@ -131,7 +131,7 @@ export const Account = () => {
   }, []);
 
   function logout() {
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/logout`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/logout`, {
         credentials:'include'
     });
     navigate('/');
