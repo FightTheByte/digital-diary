@@ -29,6 +29,8 @@ const databasePool = new sessionPool({
     password: process.env.DBPASSWORD,
     database: process.env.DBDATABASE,
     port: process.env.DBPORT,
+    max: 30,
+    idleTimeoutMillis: 200,
     ssl: { rejectUnauthorized: false } 
 });
 
@@ -166,10 +168,10 @@ app.post('/register', async (req, res, next) =>{
         })
         
     } catch(e) {
-        client.query('ROLLBACK');
+        if(client) client.query('ROLLBACK');
         res.status(500).send('Unknown Server Error');
     } finally{
-        client.release();
+        if(client) client.release();
     }
 
 })
