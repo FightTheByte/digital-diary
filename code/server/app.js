@@ -19,7 +19,7 @@ const options = {
 
 app.use(express.json());
 app.use(cors(options));
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 
 
@@ -28,7 +28,7 @@ const databasePool = new sessionPool({
     host: process.env.HOST,
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
-    port: 5432
+    port: process.env.DBPORT
 });
 
 const sessionConfig = {
