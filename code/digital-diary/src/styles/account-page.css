@@ -1,7 +1,13 @@
+html, body {
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+}
+
 .account-container{
     background-color: #D9D9D9;
-    width:100%;
-    height: 98dvh;
+    background-size: cover;
+    height: 100dvh;
     margin: 0;
     padding: 0;
     display: flex;
@@ -10,19 +16,68 @@
 }
 
 
-.read-book{
-    border: 2px solid black;
-    width: 100vw;
+.acc-book{
+    border: 1px solid black;
+    width: 100%;
+    height: 80%;
     max-width: 70%;
     display: grid;
-    grid-template-columns: 1.2fr 6fr;
+    margin-top: 4rem;
+    grid-template-columns: 1fr 6fr;
     gap: 0rem;
-    margin-bottom: 5rem;
+    align-self: center;
+    z-index: 4;
 }
 
-.read-binder{
+.account-binder{
     background-color: rgb(54, 137, 201);
-    height: 80vh;
+    height: 100%;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.account-navbar{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    height: 100%;
+    margin-top: 0.5rem;
+}
+
+.selector{
+    display:flex;
+    width: 6.3rem;
+    border: 2px solid black;
+    align-content: center;
+    justify-content: center;
+}
+
+.selector:hover{
+    box-shadow: 5px 10px rgba(96, 171, 228, 0.527);
+}
+
+.acc-page{
+    background-color: #ffffff;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    gap: 0;
+    justify-content: center;
+    grid-template-rows:  auto 1fr;
+}
+
+
+.pie-chart-container {
+  width: 100%;
+  height: 100%;
+  max-width: 40rem; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart {
+  width: 45vw;
+  height: 45vh;
 }
