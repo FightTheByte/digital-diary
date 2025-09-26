@@ -14,11 +14,11 @@ const app = express();
 const options = {
     "origin": [
         "http://localhost:3000",
-        "https://digital-diary-fightthebytes-projects.vercel.app/",
+        "https://digital-diary-fightthebytes-projects.vercel.app",
         "https://digital-diary.vercel.app",
-        "https://digital-diary-p5o2mooj7-fightthebytes-projects.vercel.app/"
+        "https://digital-diary-p5o2mooj7-fightthebytes-projects.vercel.app"
     ],
-    "methods": ["GET", "POST", "DELETE", "PUT"],
+    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     credentials: true
 };
 
