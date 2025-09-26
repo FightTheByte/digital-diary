@@ -23,6 +23,7 @@ export const Landing = () => {
     }, [])
 
     async function login(){
+        if(username == "" || password == "") return;
         const response = await fetch(process.env.REACT_APP_LOGIN_URL, {
             method: "POST",
             headers:{
@@ -37,10 +38,28 @@ export const Landing = () => {
         if(response.status == 200){
             navigate('/post');
         }
+        if(response.status == 401){
+            alert("incorrect details");
+        }
+        
     }
 
-    function register(){
-        navigate('/register');
+    async function register(){
+        if(username == "" || password == "") return;
+        const response = await fetch('http://localhost:4000/register', {
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            }),
+            credentials: "include"
+        });
+        if(response.status == 200){
+            navigate('/post');
+        }
     }
 
     return(
