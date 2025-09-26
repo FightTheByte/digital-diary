@@ -10,6 +10,7 @@ export const Account = () => {
 
   const [days, setDays] = useState();
   const [writtenDays, setWrittenDays] = useState();
+  const [binderArray, setBinderArray] = useState([]);
   const navigate = useNavigate();
 
   const data = {
@@ -59,6 +60,13 @@ export const Account = () => {
       });
       const jsonResponse = await response.json();
       return jsonResponse.response;
+    }
+
+    async function populateBinder() {
+      let holder = Array.from({ length: 6 }, (element, index) => {
+        return <div className="binder-holes"></div>;
+      });
+      setBinderArray(holder);
     }
 
     async function populatePosts(){
@@ -111,6 +119,7 @@ export const Account = () => {
 
     authenticated();
     populatePosts();
+    populateBinder();
   }, []);
 
   function logout() {
@@ -124,7 +133,7 @@ export const Account = () => {
     <>
       <div className="account-container">
           <div className="acc-book">
-            <div className="account-binder"></div>
+            <div className="account-binder">{binderArray}</div>
             <div className="acc-page">
                 <navbar className='account-navbar'>
                     <div
