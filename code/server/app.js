@@ -169,7 +169,7 @@ app.post('/register', async (req, res, next) =>{
         
     } catch(e) {
         if(client) client.query('ROLLBACK');
-        res.status(500).send('Unknown Server Error');
+        res.status(500).send(e.message);
     } finally{
         if(client) client.release();
     }
