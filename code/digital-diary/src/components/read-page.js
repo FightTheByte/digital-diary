@@ -110,7 +110,7 @@ export const ReadPosts = () => {
     }
     let searchArray = postArray.filter((post) => {
       const titleSearch = post.title.toLowerCase().includes(term);
-      const tagsSearch = post.tags.some((tag) => {
+      const tagsSearch = post.tags?.some((tag) => {
         return tag.toLowerCase().includes(term);
       });
 
